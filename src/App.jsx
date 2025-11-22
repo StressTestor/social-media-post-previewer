@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Upload, Image as ImageIcon, X, Layout, Twitter, Instagram, Linkedin } from 'lucide-react';
 import AdPlaceholder from './components/AdPlaceholder';
+import AdBanner from './components/AdBanner';
 import { TwitterPreview, InstagramPreview, LinkedInPreview } from './components/SocialPreviews';
 
 function App() {
@@ -193,7 +194,7 @@ function App() {
 
           {/* Leaderboard Ad - Fixed Bottom */}
           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 flex justify-center z-10">
-            <AdPlaceholder width="728px" height="90px" className="shadow-sm hidden md:flex" />
+            <AdBanner src="/ad-728x90.html" width="728" height="90" className="shadow-sm hidden md:flex" />
             <AdPlaceholder width="320px" height="50px" className="shadow-sm flex md:hidden" />
           </div>
         </div>
