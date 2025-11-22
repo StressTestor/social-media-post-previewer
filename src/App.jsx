@@ -186,18 +186,13 @@ function App() {
               {activeTab === 'linkedin' && <LinkedInPreview {...formData} />}
             </div>
 
-            {/* Skyscraper Ad - Fixed Right */}
-            <div className="hidden xl:block fixed right-6 top-32 bottom-32 w-[160px] flex flex-col justify-center pointer-events-none">
-              <div className="pointer-events-auto shadow-sm">
-                <AdsterraBanner height={600} width={160} adKey="REPLACE_WITH_YOUR_KEY" />
-              </div>
-            </div>
+
           </div>
 
           {/* Leaderboard Ad - Fixed Bottom */}
           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 flex justify-center z-10">
             <div className="shadow-sm hidden md:flex">
-              <AdsterraBanner height={90} width={728} adKey="REPLACE_WITH_YOUR_KEY" />
+              <AdsterraBanner height={90} width={728} adKey="3bb0671c3e4f68489eba484e0f2e42f2" />
             </div>
             <div className="shadow-sm flex md:hidden">
               <AdsterraBanner height={50} width={320} adKey="REPLACE_WITH_YOUR_KEY" />
