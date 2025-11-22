@@ -227,35 +227,11 @@ export const FacebookPreview = ({ name, handle, text, image, avatar }) => {
                 </button>
             </div>
         </div>
-    );
-};
+                </div >
+            </div >
 
-export const TikTokPreview = ({ name, handle, text, image, avatar }) => {
-    return (
-        <div className="bg-black text-white rounded-lg max-w-[350px] w-full font-sans overflow-hidden relative aspect-[9/16] flex items-center justify-center">
-            {image ? (
-                <img src={image} alt="Post content" className="w-full h-full object-cover opacity-80" />
-            ) : (
-                <div className="w-full h-full bg-gray-800 flex items-center justify-center flex-col gap-2">
-                    <Music2 size={48} className="text-gray-600" />
-                    <span className="text-gray-500 text-sm">Video Preview</span>
-                </div>
-            )}
-
-            {/* Overlay UI */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent pt-20">
-                <div className="mb-4">
-                    <div className="font-bold text-shadow-sm mb-1">@{handle || 'handle'}</div>
-                    <div className="text-sm text-shadow-sm line-clamp-2">{text || 'Caption goes here... #fyp #viral'}</div>
-                    <div className="flex items-center gap-2 mt-2 text-sm font-medium">
-                        <Music2 size={14} />
-                        <span className="truncate max-w-[200px]">Original Sound - {name || 'Name'}</span>
-                    </div>
-                </div>
-            </div>
-
-            {/* Right Action Bar */}
-            <div className="absolute right-2 bottom-20 flex flex-col items-center gap-4">
+    {/* Right Action Bar */ }
+    < div className = "absolute right-2 bottom-20 flex flex-col items-center gap-4" >
                 <div className="relative">
                     {avatar ? (
                         <img src={avatar} alt={name} className="w-10 h-10 rounded-full object-cover border-2 border-white" />
@@ -286,7 +262,7 @@ export const TikTokPreview = ({ name, handle, text, image, avatar }) => {
                     <Share size={32} className="fill-white text-white" />
                     <span className="text-xs font-bold">20.1K</span>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
