@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Upload, Image as ImageIcon, X, Layout, Twitter, Instagram, Linkedin } from 'lucide-react';
 import AdPlaceholder from './components/AdPlaceholder';
-import AdBanner from './components/AdBanner';
+import AdsterraBanner from './components/AdsterraBanner';
 import { TwitterPreview, InstagramPreview, LinkedInPreview } from './components/SocialPreviews';
 
 function App() {
@@ -188,14 +188,20 @@ function App() {
 
             {/* Skyscraper Ad - Fixed Right */}
             <div className="hidden xl:block fixed right-6 top-32 bottom-32 w-[160px] flex flex-col justify-center pointer-events-none">
-              <AdPlaceholder width="160px" height="600px" className="pointer-events-auto shadow-sm" />
+              <div className="pointer-events-auto shadow-sm">
+                <AdsterraBanner height={600} width={160} adKey="REPLACE_WITH_YOUR_KEY" />
+              </div>
             </div>
           </div>
 
           {/* Leaderboard Ad - Fixed Bottom */}
           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 flex justify-center z-10">
-            <AdBanner src="/ad-728x90.html" width="728" height="90" className="shadow-sm hidden md:flex" />
-            <AdPlaceholder width="320px" height="50px" className="shadow-sm flex md:hidden" />
+            <div className="shadow-sm hidden md:flex">
+              <AdsterraBanner height={90} width={728} adKey="REPLACE_WITH_YOUR_KEY" />
+            </div>
+            <div className="shadow-sm flex md:hidden">
+              <AdsterraBanner height={50} width={320} adKey="REPLACE_WITH_YOUR_KEY" />
+            </div>
           </div>
         </div>
       </main>
