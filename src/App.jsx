@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Upload, Image as ImageIcon, X, Layout, Twitter, Instagram, Linkedin } from 'lucide-react';
 import AdPlaceholder from './components/AdPlaceholder';
 import AdsterraBanner from './components/AdsterraBanner';
-import { TwitterPreview, InstagramPreview, LinkedInPreview } from './components/SocialPreviews';
+import { TwitterPreview, InstagramPreview, LinkedInPreview, FacebookPreview, TikTokPreview } from './components/SocialPreviews';
 
 function App() {
   const [activeTab, setActiveTab] = useState('twitter');
@@ -164,30 +164,53 @@ function App() {
             </button>
             <button
               onClick={() => setActiveTab('instagram')}
-              className={`flex items-center gap-2 py-4 border-b-2 font-medium text-sm transition-colors ${activeTab === 'instagram' ? 'border-[#E1306C] text-[#E1306C]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'instagram' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'
+                }`}
             >
-              <Instagram size={18} />
-              Instagram
+              <div className="flex items-center gap-2">
+                <Instagram size={16} />
+                Instagram
+              </div>
             </button>
             <button
               onClick={() => setActiveTab('linkedin')}
-              className={`flex items-center gap-2 py-4 border-b-2 font-medium text-sm transition-colors ${activeTab === 'linkedin' ? 'border-[#0a66c2] text-[#0a66c2]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'linkedin' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'
+                }`}
             >
-              <Linkedin size={18} />
-              LinkedIn
+              <div className="flex items-center gap-2">
+                <Linkedin size={16} />
+                LinkedIn
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveTab('facebook')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'facebook' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'
+                }`}
+            >
+              <div className="flex items-center gap-2">
+                <span>Facebook</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveTab('tiktok')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'tiktok' ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'
+                }`}
+            >
+              <div className="flex items-center gap-2">
+                <span>TikTok</span>
+              </div>
             </button>
           </div>
 
-          {/* Preview Canvas */}
-          <div className="flex-1 overflow-y-auto p-8 flex items-start justify-center relative">
-            <div className="w-full max-w-2xl flex justify-center pb-32"> {/* pb-32 for bottom ad space */}
-              {activeTab === 'twitter' && <TwitterPreview {...formData} />}
-              {activeTab === 'instagram' && <InstagramPreview {...formData} />}
-              {activeTab === 'linkedin' && <LinkedInPreview {...formData} />}
-            </div>
-
-
+          {/* Preview Area */}
+          <div className="flex-1 flex items-center justify-center p-8 overflow-y-auto bg-gray-50/50">
+            {activeTab === 'twitter' && <TwitterPreview {...formData} />}
+            {activeTab === 'instagram' && <InstagramPreview {...formData} />}
+            {activeTab === 'linkedin' && <LinkedInPreview {...formData} />}
+            {activeTab === 'facebook' && <FacebookPreview {...formData} />}
+            {activeTab === 'tiktok' && <TikTokPreview {...formData} />}
           </div>
+
 
           {/* Leaderboard Ad - Fixed Bottom */}
           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 flex justify-center z-10">
