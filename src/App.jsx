@@ -227,6 +227,11 @@ function App() {
                   </div>
                 </div>
               </div>
+
+              {/* Sidebar Ad */}
+              <div className="pt-6 flex justify-center border-t border-gray-200 mt-6">
+                <AdsterraBanner height={250} width={300} adKey="3bb0671c3e4f68489eba484e0f2e42f2" />
+              </div>
             </div>
           </div>
         </div>
