@@ -40,6 +40,7 @@ const AdsterraBanner = ({ height, width, adKey }) => {
       width={width}
       height={height}
       title={`ad-${adKey}`}
+      loading="lazy"
       style={{ border: 'none', overflow: 'hidden' }}
     />
   );
