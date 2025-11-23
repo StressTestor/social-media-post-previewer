@@ -1,6 +1,11 @@
-import { ThumbsUp, MessageSquare, Share2, Globe, MoreHorizontal, BadgeCheck } from 'lucide-react';
+import React from 'react';
+import { ThumbsUp, MessageSquare, Share2, Globe, MoreHorizontal, BadgeCheck, X } from 'lucide-react';
+import { format } from 'date-fns';
 
-export const FacebookPreview = ({ name, handle, text, image, avatar, likes, comments, shares, isVerified, darkMode }) => {
+export const FacebookPreview = ({ name, handle, text, image, avatar, likes, comments, shares, isVerified, postDate, darkMode }) => {
+    const formattedDate = postDate ? format(new Date(postDate), 'MMMM d') : 'November 23';
+    const formattedTime = postDate ? format(new Date(postDate), 'h:mm a') : '12:45 PM';
+
     return (
         <div className={`border rounded-lg max-w-[500px] w-full font-sans text-[15px] shadow-sm transition-colors ${darkMode ? 'bg-[#242526] border-gray-700 text-white' : 'bg-white border-gray-200 text-[#050505]'}`}>
             <div className="p-3 flex gap-2 items-center">
@@ -14,8 +19,10 @@ export const FacebookPreview = ({ name, handle, text, image, avatar, likes, comm
                         <div className={`font-semibold text-[15px] leading-tight ${darkMode ? 'text-white' : 'text-[#050505]'}`}>{name || 'Name'}</div>
                         {isVerified && <BadgeCheck size={14} className="text-blue-500 fill-blue-500 text-white" />}
                     </div>
-                    <div className="text-xs text-gray-500 flex items-center gap-1">
-                        2h • <Globe size={12} />
+                    <div className={`text-xs flex items-center gap-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                        <span>{formattedDate} at {formattedTime}</span>
+                        <span>·</span>
+                        <Globe size={12} />
                     </div>
                 </div>
                 <div className="text-gray-500">
