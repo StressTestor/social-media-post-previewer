@@ -56,9 +56,9 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
+    <div className={`min-h-screen flex flex-col font-sans text-gray-900 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+      <header className={`px-6 py-4 flex items-center justify-between sticky top-0 z-10 ${darkMode ? 'bg-black border-b border-gray-700' : 'bg-white border-b border-gray-200'}`}>
         <div className="flex items-center gap-2">
           <div className="bg-blue-600 p-2 rounded-lg text-white">
             <Layout size={20} />
@@ -79,9 +79,9 @@ function App() {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col lg:flex-row overflow-hidden h-[calc(100vh-64px)]">
+      <main className={`flex-1 flex flex-col lg:flex-row overflow-hidden h-[calc(100vh-64px)] ${darkMode ? 'bg-gray-800' : ''}`}>
         {/* Left Column: Editor */}
-        <div className="w-full lg:w-[400px] bg-white border-r border-gray-200 flex flex-col h-full overflow-y-auto z-20 shadow-sm">
+        <div className={`w-full lg:w-[400px] border-r flex flex-col h-full overflow-y-auto z-20 shadow-sm ${darkMode ? 'bg-[#1b1f23] border-gray-700' : 'bg-white border-gray-200'}`}>
           <div className="p-6 space-y-6">
             <div>
               <h2 className="text-lg font-semibold mb-4">Post Details</h2>
@@ -250,9 +250,9 @@ function App() {
         </div>
 
         {/* Right Column: Preview Area */}
-        <div className="flex-1 flex flex-col bg-gray-100 relative overflow-hidden">
+        <div className={`flex-1 flex flex-col relative overflow-hidden ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
           {/* Tabs */}
-          <div className="bg-white border-b border-gray-200 px-6 flex items-center gap-6">
+          <div className={`px-6 flex items-center gap-6 ${darkMode ? 'bg-black border-b border-gray-700' : 'bg-white border-b border-gray-200'}`}>
             <button
               onClick={() => setActiveTab('twitter')}
               className={`flex items-center gap-2 py-4 border-b-2 font-medium text-sm transition-colors ${activeTab === 'twitter' ? 'border-[#1d9bf0] text-[#1d9bf0]' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
@@ -312,7 +312,7 @@ function App() {
           </div>
 
           {/* Preview Area */}
-          <div className="flex-1 flex items-center justify-center p-8 overflow-y-auto bg-gray-50/50">
+          <div className={`flex-1 flex items-center justify-center p-8 overflow-y-auto ${darkMode ? 'bg-gray-800/50' : 'bg-gray-50/50'}`}>
             <div ref={previewRef} className="p-4">
               {activeTab === 'twitter' && <TwitterPreview {...formData} darkMode={darkMode} />}
               {activeTab === 'instagram' && <InstagramPreview {...formData} darkMode={darkMode} />}
