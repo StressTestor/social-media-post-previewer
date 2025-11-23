@@ -1,52 +1,56 @@
 import React, { useEffect, useRef } from 'react';
 
 const AdsterraBanner = ({ height, width, adKey }) => {
-  const bannerRef = useRef(null);
+  const containerRef = useRef(null);
+  const scriptLoadedRef = useRef(false);
 
   useEffect(() => {
-    if (!bannerRef.current) return;
+    if (!containerRef.current || scriptLoadedRef.current) return;
 
-    const iframe = bannerRef.current;
-    const iframeDoc = iframe.contentWindow.document;
+    // Clear container
+    containerRef.current.innerHTML = '';
 
-    if (iframeDoc.body.innerHTML.length > 0) return;
-
-    const adContent = `
-      <html>
-        <body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;">
-          <script type="text/javascript">
-            atOptions = {
-              'key' : '${adKey}',
-              'format' : 'iframe',
-              'height' : ${height},
-              'width' : ${width},
-              'params' : {}
-            };
-          </script>
-          <script type="text/javascript" src="//www.highperformanceformat.com/${adKey}/invoke.js"></script>
-        </body>
-      </html>
+    // Create config script
+    const configScript = document.createElement('script');
+    configScript.type = 'text/javascript';
+    configScript.innerHTML = `
+      atOptions = {
+        'key' : '${adKey}',
+        'format' : 'iframe',
+        'height' : ${height},
+        'width' : ${width},
+        'params' : {}
+      };
     `;
 
-    try {
-      iframeDoc.open();
-      iframeDoc.write(adContent);
-      iframeDoc.close();
-    } catch (e) {
-      console.error('Adsterra iframe error:', e);
-    }
+    // Create ad script
+    const adScript = document.createElement('script');
+    adScript.type = 'text/javascript';
+    adScript.src = `//www.highperformanceformat.com/${adKey}/invoke.js`;
+    adScript.async = true;
 
+    // Append scripts
+    containerRef.current.appendChild(configScript);
+    containerRef.current.appendChild(adScript);
+
+    scriptLoadedRef.current = true;
+
+    return () => {
+      scriptLoadedRef.current = false;
+    };
   }, [adKey, height, width]);
 
   return (
-    <iframe
-      ref={bannerRef}
-      width={width}
-      height={height}
-      title={`ad-${adKey}`}
-      style={{ border: 'none', overflow: 'hidden' }}
-      scrolling="no"
-      frameBorder="0"
+    <div
+      ref={containerRef}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        overflow: 'hidden',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
     />
   );
 };
