@@ -23,7 +23,7 @@ const AdsterraBanner = ({ height, width, adKey }) => {
     const adScript = document.createElement('script');
     adScript.type = 'text/javascript';
     adScript.id = `invoke-${containerId}`;
-    adScript.src = `//www.highperformanceformat.com/${adKey}/invoke.js`;
+    adScript.src = `https://www.highperformanceformat.com/${adKey}/invoke.js`;
 
     // Append to container (Adsterra will render iframe here)
     if (containerRef.current) {
