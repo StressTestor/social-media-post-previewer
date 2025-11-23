@@ -47,7 +47,6 @@ const AdsterraBanner = ({ height, width, adKey }) => {
       style={{ border: 'none', overflow: 'hidden' }}
       scrolling="no"
       frameBorder="0"
-      sandbox="allow-scripts allow-popups"
     />
   );
 };
