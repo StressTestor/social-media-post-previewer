@@ -330,7 +330,7 @@ function App() {
               <AdsterraBanner height={90} width={728} adKey="3bb0671c3e4f68489eba484e0f2e42f2" />
             </div>
             <div className="shadow-sm flex md:hidden">
-              <AdsterraBanner height={50} width={320} adKey="REPLACE_WITH_YOUR_KEY" />
+              <AdsterraBanner height={50} width={320} adKey="3ad1de4124b74f0781f8a0876598a507" />
             </div>
           </div>
         </div>
