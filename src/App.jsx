@@ -243,7 +243,7 @@ function App() {
               </div>
 
               {/* Sidebar Ad */}
-              <div className="pt-6 flex justify-center border-t border-gray-200 mt-6">
+              <div className={`pt-6 flex justify-center border-t mt-6 ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
                 <AdsterraBanner height={250} width={300} adKey="bced013aa7112665fb318c96d3a208db" />
               </div>
             </div>
@@ -325,7 +325,7 @@ function App() {
 
 
           {/* Leaderboard Ad - Fixed Bottom */}
-          <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 flex justify-center z-10">
+          <div className={`absolute bottom-0 left-0 right-0 border-t p-4 flex justify-center z-10 ${darkMode ? 'bg-[#1b1f23] border-gray-700' : 'bg-white border-gray-200'}`}>
             <div className="shadow-sm hidden md:flex">
               <AdsterraBanner height={90} width={728} adKey="3bb0671c3e4f68489eba484e0f2e42f2" />
             </div>
