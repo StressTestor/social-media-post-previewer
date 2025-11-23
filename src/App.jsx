@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
-import { Upload, Image as ImageIcon, X, Layout, Twitter, Instagram, Linkedin } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Upload, Image as ImageIcon, X, Layout, Twitter, Instagram, Linkedin, Moon, Sun, Download } from 'lucide-react';
+import { toPng } from 'html-to-image';
+import download from 'downloadjs';
 import AdPlaceholder from './components/AdPlaceholder';
 import AdsterraBanner from './components/AdsterraBanner';
-import { TwitterPreview, InstagramPreview, LinkedInPreview, FacebookPreview, TikTokPreview } from './components/SocialPreviews';
+import TwitterPreview from './components/previews/TwitterPreview';
+import InstagramPreview from './components/previews/InstagramPreview';
+import LinkedInPreview from './components/previews/LinkedInPreview';
+import FacebookPreview from './components/previews/FacebookPreview';
+import TikTokPreview from './components/previews/TikTokPreview';
 
 function App() {
   const [activeTab, setActiveTab] = useState('twitter');
+  const [darkMode, setDarkMode] = useState(false);
+  const previewRef = useRef(null);
   const [formData, setFormData] = useState({
     name: '',
     handle: '',
     text: '',
     avatar: null,
-    image: null
+    image: null,
+    likes: '1.2K',
+    comments: '45',
+    shares: '12',
+    isVerified: false
   });
 
   const handleInputChange = (e) => {
@@ -31,6 +43,17 @@ function App() {
     setFormData(prev => ({ ...prev, [field]: null }));
   };
 
+  const handleDownload = async () => {
+    if (previewRef.current) {
+      try {
+        const dataUrl = await toPng(previewRef.current, { cacheBust: true });
+        download(dataUrl, `${activeTab}-preview.png`);
+      } catch (err) {
+        console.error('Failed to download image', err);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
       {/* Header */}
@@ -41,8 +64,17 @@ function App() {
           </div>
           <h1 className="text-xl font-bold text-gray-900 tracking-tight">PostPreviewer</h1>
         </div>
-        <div className="text-sm text-gray-500">
-          Optimized for Creators
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
+            title="Toggle Dark Mode"
+          >
+            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <div className="text-sm text-gray-500 hidden sm:block">
+            Optimized for Creators
+          </div>
         </div>
       </header>
 
@@ -78,6 +110,17 @@ function App() {
                       placeholder="janedoe"
                       className="w-full pl-7 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                     />
+                  </div>
+                  <div className="mt-2 flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      name="isVerified"
+                      id="isVerified"
+                      checked={formData.isVerified}
+                      onChange={(e) => setFormData(prev => ({ ...prev, isVerified: e.target.checked }))}
+                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    />
+                    <label htmlFor="isVerified" className="text-sm text-gray-700 select-none">Show Verified Badge</label>
                   </div>
                 </div>
 
@@ -147,6 +190,43 @@ function App() {
                   )}
                 </div>
               </div>
+
+              {/* Engagement Metrics */}
+              <div>
+                <h2 className="text-lg font-semibold mb-4 pt-4 border-t border-gray-200">Engagement Metrics</h2>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Likes</label>
+                    <input
+                      type="text"
+                      name="likes"
+                      value={formData.likes}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Comments</label>
+                    <input
+                      type="text"
+                      name="comments"
+                      value={formData.comments}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Shares</label>
+                    <input
+                      type="text"
+                      name="shares"
+                      value={formData.shares}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -202,13 +282,26 @@ function App() {
             </button>
           </div>
 
+          {/* Download Button */}
+          <div className="absolute top-[72px] right-6 z-20">
+            <button
+              onClick={handleDownload}
+              className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors shadow-sm"
+            >
+              <Download size={16} />
+              Export Image
+            </button>
+          </div>
+
           {/* Preview Area */}
           <div className="flex-1 flex items-center justify-center p-8 overflow-y-auto bg-gray-50/50">
-            {activeTab === 'twitter' && <TwitterPreview {...formData} />}
-            {activeTab === 'instagram' && <InstagramPreview {...formData} />}
-            {activeTab === 'linkedin' && <LinkedInPreview {...formData} />}
-            {activeTab === 'facebook' && <FacebookPreview {...formData} />}
-            {activeTab === 'tiktok' && <TikTokPreview {...formData} />}
+            <div ref={previewRef} className="p-4">
+              {activeTab === 'twitter' && <TwitterPreview {...formData} darkMode={darkMode} />}
+              {activeTab === 'instagram' && <InstagramPreview {...formData} darkMode={darkMode} />}
+              {activeTab === 'linkedin' && <LinkedInPreview {...formData} darkMode={darkMode} />}
+              {activeTab === 'facebook' && <FacebookPreview {...formData} darkMode={darkMode} />}
+              {activeTab === 'tiktok' && <TikTokPreview {...formData} darkMode={darkMode} />}
+            </div>
           </div>
 
 
