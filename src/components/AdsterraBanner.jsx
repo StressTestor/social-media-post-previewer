@@ -1,17 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const AdsterraBanner = ({ height, width, adKey }) => {
-  const bannerRef = useRef(null);
+  const [srcDoc, setSrcDoc] = useState('');
 
   useEffect(() => {
-    if (!bannerRef.current) return;
-
-    const iframe = bannerRef.current;
-    const iframeDoc = iframe.contentWindow.document;
-
-    if (iframeDoc.body.innerHTML.length > 0) return; // Prevent double render
-
-    const adContent = `
+    setSrcDoc(`
       <html>
         <body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;">
           <script type="text/javascript">
@@ -23,24 +16,21 @@ const AdsterraBanner = ({ height, width, adKey }) => {
               'params' : {}
             };
           </script>
-          <script type="text/javascript" src="https://www.highperformanceformat.com/${adKey}/invoke.js"></script>
+          <script type="text/javascript" src="//www.highperformanceformat.com/${adKey}/invoke.js"></script>
         </body>
       </html>
-    `;
-
-    iframeDoc.open();
-    iframeDoc.write(adContent);
-    iframeDoc.close();
-
+    `);
   }, [adKey, height, width]);
 
   return (
     <iframe
-      ref={bannerRef}
       width={width}
       height={height}
+      srcDoc={srcDoc}
       title={`ad-${adKey}`}
       style={{ border: 'none', overflow: 'hidden' }}
+      scrolling="no"
+      frameBorder="0"
     />
   );
 };
