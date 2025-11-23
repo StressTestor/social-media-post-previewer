@@ -9,6 +9,7 @@ import InstagramPreview from './components/previews/InstagramPreview';
 import LinkedInPreview from './components/previews/LinkedInPreview';
 import FacebookPreview from './components/previews/FacebookPreview';
 import TikTokPreview from './components/previews/TikTokPreview';
+import SEOContent from './components/SEOContent';
 
 function App() {
   const [activeTab, setActiveTab] = useState('twitter');
@@ -334,6 +335,9 @@ function App() {
           </div>
         </div>
       </main>
+
+      {/* SEO Content Section */}
+      <SEOContent darkMode={darkMode} />
     </div>
   );
 }
