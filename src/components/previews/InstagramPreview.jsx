@@ -1,6 +1,10 @@
+import React from 'react';
 import { Heart, MessageCircle, Send, Bookmark, MoreHorizontal, BadgeCheck } from 'lucide-react';
+import { format } from 'date-fns';
 
-export const InstagramPreview = ({ name, handle, text, image, avatar, likes, comments, isVerified, darkMode }) => {
+export const InstagramPreview = ({ name, handle, text, image, avatar, likes, comments, isVerified, postDate, darkMode }) => {
+    const formattedDate = postDate ? format(new Date(postDate), 'MMMM d') : 'SEPTEMBER 24';
+
     return (
         <div className={`border rounded-lg max-w-[470px] w-full font-sans text-sm transition-colors ${darkMode ? 'bg-black border-gray-800 text-white' : 'bg-white border-gray-200 text-gray-900'}`}>
             <div className="flex items-center justify-between p-3">
@@ -40,7 +44,9 @@ export const InstagramPreview = ({ name, handle, text, image, avatar, likes, com
                     <span className="font-semibold mr-2">{handle || 'handle'}</span>
                     <span className={darkMode ? 'text-white' : 'text-gray-900'}>{text || 'Your caption goes here...'}</span>
                 </div>
-                <div className="text-gray-500 text-xs mt-2 uppercase">2 HOURS AGO</div>
+                <div className="text-gray-500 text-xs mt-2 uppercase">
+                    {formattedDate}
+                </div>
             </div>
         </div>
     );

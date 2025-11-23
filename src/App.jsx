@@ -23,7 +23,8 @@ function App() {
     likes: '1.2K',
     comments: '45',
     shares: '12',
-    isVerified: false
+    isVerified: false,
+    postDate: new Date().toISOString().slice(0, 16)
   });
 
   const handleInputChange = (e) => {
@@ -122,6 +123,18 @@ function App() {
                     />
                     <label htmlFor="isVerified" className="text-sm text-gray-700 select-none">Show Verified Badge</label>
                   </div>
+                </div>
+
+                {/* Date/Time Picker */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Post Time</label>
+                  <input
+                    type="datetime-local"
+                    name="postDate"
+                    value={formData.postDate}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  />
                 </div>
 
                 {/* Avatar Upload */}

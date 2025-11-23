@@ -1,6 +1,10 @@
+import React from 'react';
 import { Heart, MessageCircle, Share, Bookmark, Music2, BadgeCheck } from 'lucide-react';
+import { format } from 'date-fns';
 
-export const TikTokPreview = ({ name, handle, text, image, avatar, likes, comments, shares, isVerified, darkMode }) => {
+export const TikTokPreview = ({ name, handle, text, image, avatar, likes, comments, shares, isVerified, postDate, darkMode }) => {
+    const formattedDate = postDate ? format(new Date(postDate), 'MM-dd') : '11-23';
+
     return (
         <div className={`bg-black text-white rounded-lg max-w-[350px] w-full h-[600px] font-sans relative overflow-hidden shadow-lg border ${darkMode ? 'border-gray-700' : 'border-gray-800'}`}>
             {/* Background Image */}
@@ -58,6 +62,9 @@ export const TikTokPreview = ({ name, handle, text, image, avatar, likes, commen
                 <div className="flex items-center gap-2 text-sm font-medium">
                     <Music2 size={14} />
                     <div className="truncate">Original Sound - {name || 'Creator'}</div>
+                </div>
+                <div className="flex items-center gap-1 text-gray-400 text-sm mt-1">
+                    <span>{formattedDate}</span>
                 </div>
             </div>
         </div>

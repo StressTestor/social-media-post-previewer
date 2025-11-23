@@ -1,6 +1,10 @@
-import { ThumbsUp, MessageSquare, Share2, Send, MoreHorizontal, BadgeCheck } from 'lucide-react';
+import React from 'react';
+import { ThumbsUp, MessageSquare, Share2, Send, MoreHorizontal, BadgeCheck, Globe } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
 
-export const LinkedInPreview = ({ name, handle, text, image, avatar, likes, comments, shares, isVerified, darkMode }) => {
+export const LinkedInPreview = ({ name, handle, text, image, avatar, likes, comments, shares, isVerified, postDate, darkMode }) => {
+    const timeAgo = postDate ? formatDistanceToNow(new Date(postDate), { addSuffix: false }).replace('about ', '') : '1h';
+
     return (
         <div className={`border rounded-lg max-w-[555px] w-full font-sans text-sm overflow-hidden transition-colors ${darkMode ? 'bg-[#1b1f23] border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}>
             <div className="p-3 flex gap-3 mb-1">
@@ -16,7 +20,8 @@ export const LinkedInPreview = ({ name, handle, text, image, avatar, likes, comm
                     </div>
                     <div className="text-xs text-gray-500">Software Engineer at Tech Co</div>
                     <div className="text-xs text-gray-500 flex items-center gap-1">
-                        1h • <span className="text-gray-500">🌐</span>
+                        <span>{timeAgo} • </span>
+                        <Globe size={12} />
                     </div>
                 </div>
                 <div className="ml-auto text-gray-500">

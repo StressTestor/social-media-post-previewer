@@ -1,6 +1,10 @@
-import { MessageCircle, Repeat, Heart, Share, MoreHorizontal, BadgeCheck } from 'lucide-react';
+import React from 'react';
+import { MessageCircle, Repeat2, Heart, Share, MoreHorizontal, BadgeCheck } from 'lucide-react';
+import { format } from 'date-fns';
 
-export const TwitterPreview = ({ name, handle, text, image, avatar, likes, comments, shares, isVerified, darkMode }) => {
+export const TwitterPreview = ({ name, handle, text, image, avatar, likes, comments, shares, isVerified, postDate, darkMode }) => {
+    const formattedDate = postDate ? format(new Date(postDate), 'MMM d, yyyy · h:mm a') : 'Nov 23, 2023 · 10:30 AM';
+
     return (
         <div className={`border rounded-xl p-4 max-w-[500px] w-full font-sans text-[15px] transition-colors ${darkMode ? 'bg-black border-gray-800 text-white' : 'bg-white border-gray-200 text-gray-900'}`}>
             <div className="flex gap-3">
@@ -32,6 +36,9 @@ export const TwitterPreview = ({ name, handle, text, image, avatar, likes, comme
                             <img src={image} alt="Post content" className="w-full h-auto object-cover" />
                         </div>
                     )}
+                    <div className={`mt-3 text-[15px] ${darkMode ? 'text-gray-500' : 'text-gray-500'}`}>
+                        {formattedDate} · <span className={darkMode ? 'text-white' : 'text-black'}><strong>2.1M</strong> Views</span>
+                    </div>
                     <div className="flex justify-between mt-3 text-gray-500 max-w-[425px]">
                         <div className="flex items-center gap-2 group cursor-pointer hover:text-[#1d9bf0]">
                             <div className="p-2 rounded-full group-hover:bg-[#1d9bf0]/10">
@@ -41,7 +48,7 @@ export const TwitterPreview = ({ name, handle, text, image, avatar, likes, comme
                         </div>
                         <div className="flex items-center gap-2 group cursor-pointer hover:text-[#00ba7c]">
                             <div className="p-2 rounded-full group-hover:bg-[#00ba7c]/10">
-                                <Repeat size={18} />
+                                <Repeat2 size={18} />
                             </div>
                             <span className="text-xs">{shares || '5'}</span>
                         </div>
