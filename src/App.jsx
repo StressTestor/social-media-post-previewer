@@ -13,6 +13,8 @@ import SEOContent from './components/SEOContent';
 function App() {
   const [activeTab, setActiveTab] = useState('twitter');
   const [darkMode, setDarkMode] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const [mobileView, setMobileView] = useState('editor'); // 'editor' | 'preview'
   const previewRef = useRef(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -45,12 +47,17 @@ function App() {
   };
 
   const handleDownload = async () => {
-    if (previewRef.current) {
+    if (previewRef.current && !isExporting) {
       try {
+        setIsExporting(true);
+        // Small delay to allow UI to update
+        await new Promise(resolve => setTimeout(resolve, 100));
         const dataUrl = await toPng(previewRef.current, { cacheBust: true });
         download(dataUrl, `${activeTab}-preview.png`);
       } catch (err) {
         console.error('Failed to download image', err);
+      } finally {
+        setIsExporting(false);
       }
     }
   };
@@ -63,7 +70,29 @@ function App() {
           <div className="bg-blue-600 p-2 rounded-lg text-white">
             <Layout size={20} />
           </div>
-          <h1 className="text-xl font-bold text-gray-900 tracking-tight">PostPreviewer</h1>
+          <h1 className="text-xl font-bold text-gray-900 tracking-tight hidden sm:block">PostPreviewer</h1>
+        </div>
+
+        {/* Mobile View Toggle */}
+        <div className="flex lg:hidden bg-gray-100 dark:bg-gray-800 p-1 rounded-lg mx-2">
+          <button
+            onClick={() => setMobileView('editor')}
+            className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${mobileView === 'editor'
+              ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm'
+              : 'text-gray-500 dark:text-gray-400'
+              }`}
+          >
+            Editor
+          </button>
+          <button
+            onClick={() => setMobileView('preview')}
+            className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${mobileView === 'preview'
+              ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm'
+              : 'text-gray-500 dark:text-gray-400'
+              }`}
+          >
+            Preview
+          </button>
         </div>
         <div className="flex items-center gap-4">
           <button
@@ -81,7 +110,7 @@ function App() {
 
       <main className={`flex-1 flex flex-col lg:flex-row overflow-hidden h-[calc(100vh-64px)] ${darkMode ? 'bg-gray-800' : ''}`}>
         {/* Left Column: Editor */}
-        <div className={`w-full lg:w-[400px] border-r flex flex-col h-full overflow-y-auto z-20 shadow-sm ${darkMode ? 'bg-[#1b1f23] border-gray-700' : 'bg-white border-gray-200'}`}>
+        <div className={`w-full lg:w-[400px] border-r flex-col h-full overflow-y-auto z-20 shadow-sm ${darkMode ? 'bg-[#1b1f23] border-gray-700' : 'bg-white border-gray-200'} ${mobileView === 'editor' ? 'flex' : 'hidden lg:flex'}`}>
           <div className="p-6 space-y-6">
             <div>
               <h2 className="text-lg font-semibold mb-4">Post Details</h2>
@@ -245,7 +274,7 @@ function App() {
         </div>
 
         {/* Right Column: Preview Area */}
-        <div className={`flex-1 flex flex-col relative overflow-hidden ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+        <div className={`flex-1 flex-col relative overflow-hidden ${darkMode ? 'bg-gray-900' : 'bg-gray-100'} ${mobileView === 'preview' ? 'flex' : 'hidden lg:flex'}`}>
           {/* Tabs */}
           <div className={`px-6 flex items-center gap-6 ${darkMode ? 'bg-black border-b border-gray-700' : 'bg-white border-b border-gray-200'}`}>
             <button
@@ -299,10 +328,23 @@ function App() {
           <div className="absolute top-[72px] right-6 z-20">
             <button
               onClick={handleDownload}
-              className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors shadow-sm"
+              disabled={isExporting}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm ${isExporting
+                ? 'bg-gray-700 cursor-not-allowed opacity-75 text-gray-300'
+                : 'bg-gray-900 hover:bg-gray-800 text-white'
+                }`}
             >
-              <Download size={16} />
-              Export Image
+              {isExporting ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Exporting...
+                </>
+              ) : (
+                <>
+                  <Download size={16} />
+                  Export Image
+                </>
+              )}
             </button>
           </div>
 
